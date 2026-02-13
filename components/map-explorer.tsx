@@ -17,9 +17,6 @@ const puzzleRegionShapes = [
   { name: "华南", points: "466,397 562,357 632,428 517,488 422,450" }
 ];
 
-const MAP_WIDTH = 774;
-const MAP_HEIGHT = 569;
-
 const cityProvinceMap: Record<string, string> = {
   shanghai: "shanghai",
   beijing: "beijing",
@@ -28,19 +25,23 @@ const cityProvinceMap: Record<string, string> = {
   xian: "shaanxi"
 };
 
-function toMapPoint(percentX: number, percentY: number) {
-  return {
-    x: (percentX / 100) * MAP_WIDTH,
-    y: (percentY / 100) * MAP_HEIGHT
-  };
-}
-
 export function MapExplorer() {
   const [activeCityId, setActiveCityId] = useState("shanghai");
   const [mapMode, setMapMode] = useState<MapMode>("puzzle");
   const activeCity =
     cityAlbums.find((city) => city.id === activeCityId) ?? cityAlbums[0];
   const activeProvinceId = cityProvinceMap[activeCity.id];
+  const provincePhotoCount = useMemo(() => {
+    const countMap: Record<string, number> = {};
+    for (const city of cityAlbums) {
+      const provinceId = cityProvinceMap[city.id];
+      if (!provinceId) {
+        continue;
+      }
+      countMap[provinceId] = (countMap[provinceId] ?? 0) + city.photoCount;
+    }
+    return countMap;
+  }, []);
 
   const totalCount = useMemo(
     () => cityAlbums.reduce((sum, city) => sum + city.photoCount, 0),
@@ -160,18 +161,32 @@ export function MapExplorer() {
                 >
                   {chinaMap.locations.map(
                     (location: (typeof chinaMap.locations)[number]) => {
-                    const isActiveProvince = location.id === activeProvinceId;
-                    return (
-                      <path
-                        key={location.id}
-                        d={location.path}
-                        className="stroke-[#2f654d] transition-all duration-300"
-                        strokeWidth={1.35}
-                        fill={isActiveProvince ? "#b5e873" : "#84b965"}
-                        opacity={isActiveProvince ? 0.98 : 0.86}
-                      />
-                    );
-                  }
+                      const isActiveProvince = location.id === activeProvinceId;
+                      const photoCount = provincePhotoCount[location.id] ?? 0;
+                      const hasPhotos = photoCount > 0;
+
+                      let fillColor = "#97a79e";
+                      if (hasPhotos) {
+                        fillColor = "#86c86f";
+                      }
+                      if (isActiveProvince) {
+                        fillColor = hasPhotos ? "#d4ff7a" : "#cdd6d1";
+                      }
+
+                      return (
+                        <path
+                          key={location.id}
+                          d={location.path}
+                          className={`transition-all duration-300 ${
+                            isActiveProvince ? "province-active-float" : ""
+                          }`}
+                          stroke={isActiveProvince ? "#123f30" : "#2f654d"}
+                          strokeWidth={isActiveProvince ? 2.2 : 1.2}
+                          fill={fillColor}
+                          opacity={hasPhotos ? 0.93 : 0.72}
+                        />
+                      );
+                    }
                   )}
 
                   {cityAlbums.map((city) => {
