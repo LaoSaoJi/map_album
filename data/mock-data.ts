@@ -10,6 +10,9 @@ export type CityAlbum = {
   id: string;
   name: string;
   englishName: string;
+  provinceId: string;
+  provinceName: string;
+  isMunicipality?: boolean;
   x: number;
   y: number;
   focusX: number;
@@ -24,6 +27,9 @@ export const cityAlbums: CityAlbum[] = [
     id: "shanghai",
     name: "上海",
     englishName: "Shanghai",
+    provinceId: "shanghai",
+    provinceName: "上海",
+    isMunicipality: true,
     x: 77,
     y: 53,
     focusX: 607,
@@ -62,6 +68,9 @@ export const cityAlbums: CityAlbum[] = [
     id: "beijing",
     name: "北京",
     englishName: "Beijing",
+    provinceId: "beijing",
+    provinceName: "北京",
+    isMunicipality: true,
     x: 69,
     y: 33,
     focusX: 542,
@@ -100,6 +109,8 @@ export const cityAlbums: CityAlbum[] = [
     id: "guangzhou",
     name: "广州",
     englishName: "Guangzhou",
+    provinceId: "guangdong",
+    provinceName: "广东",
     x: 70,
     y: 72,
     focusX: 501,
@@ -130,6 +141,8 @@ export const cityAlbums: CityAlbum[] = [
     id: "chengdu",
     name: "成都",
     englishName: "Chengdu",
+    provinceId: "sichuan",
+    provinceName: "四川",
     x: 52,
     y: 60,
     focusX: 389,
@@ -160,10 +173,12 @@ export const cityAlbums: CityAlbum[] = [
     id: "xian",
     name: "西安",
     englishName: "Xi'an",
+    provinceId: "shaanxi",
+    provinceName: "陕西",
     x: 58,
     y: 51,
-    focusX: 446,
-    focusY: 322,
+    focusX: 449,
+    focusY: 333,
     photoCount: 39,
     cover:
       "https://images.unsplash.com/photo-1533526513810-9f615d66d2f8?auto=format&fit=crop&w=1200&q=80",
@@ -183,6 +198,38 @@ export const cityAlbums: CityAlbum[] = [
         imageUrl:
           "https://images.unsplash.com/photo-1452104955232-9c40f5f84d60?auto=format&fit=crop&w=1200&q=80",
         note: "晚餐很丰富"
+      }
+    ]
+  },
+  {
+    id: "baoji",
+    name: "宝鸡",
+    englishName: "Baoji",
+    provinceId: "shaanxi",
+    provinceName: "陕西",
+    x: 55,
+    y: 49,
+    focusX: 437,
+    focusY: 332,
+    photoCount: 22,
+    cover:
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+    photos: [
+      {
+        id: "bjg-001",
+        title: "青铜器博物院",
+        date: "2025-05-18",
+        imageUrl:
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+        note: "历史展陈非常扎实"
+      },
+      {
+        id: "bjg-002",
+        title: "渭河傍晚",
+        date: "2025-05-19",
+        imageUrl:
+          "https://images.unsplash.com/photo-1473116763249-2faaef81ccda?auto=format&fit=crop&w=1200&q=80",
+        note: "河岸风景很安静"
       }
     ]
   }
